@@ -1,8 +1,10 @@
 import * as React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 export default function Header({onDataChanged}) {
+
 
   const handleClick = () => {
     const cond = 'low_to_high';
@@ -32,6 +34,8 @@ export default function Header({onDataChanged}) {
         <Button variant="contained" onClick={handleClick}>Low To High</Button>
         <Button variant="contained">High To Low</Button>
         <Button variant="contained">reset</Button>
+        <Link to="/cart">My Cart</Link>
+        
 
       </Stack>
     </>

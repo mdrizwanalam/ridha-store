@@ -1,25 +1,27 @@
+import { productsType } from "./product.types";
+
 const initialState = {
   data: [],
   loading: false,
   error: null,
 };
 
-const dataReducer = (state = initialState, action) => {
+const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_DATA_REQUEST":
+    case productsType.FETCH_DATA_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case "FETCH_DATA_SUCCESS":
+    case productsType.FETCH_DATA_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload,
         error: null,
       };
-    case "FETCH_DATA_FAILURE":
+    case productsType.FETCH_DATA_FAILURE:
       return {
         ...state,
         loading: false,
@@ -30,4 +32,4 @@ const dataReducer = (state = initialState, action) => {
   }
 };
 
-export default dataReducer;
+export default ProductReducer;

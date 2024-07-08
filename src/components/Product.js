@@ -8,42 +8,30 @@ import {
   Button,
 } from "@mui/material";
 
-import { connect } from 'react-redux';
-import { fetchData } from '../store/actions';
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsData } from "../store/product/product.action";
+import { addToCart } from "../store/cart/cart.action";
 
-const ProductPage = ({ fetchData, data, loading, error }) => {
+const ProductPage = () => {
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.products);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    dispatch(getProductsData());
+  }, []);
+
+
+  const addProduct = (payload) => {
+    dispatch(addToCart(payload))
+  }
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // const updateProductsData = () =>{
-  //   setShowProductsData((prevGoals) => {
-  //     const updatedProducts = [...prevGoals];
-  //     updatedProducts.sort(function(a, b){return a.price-b.price});
-  //     console.log("updatedProducts",updatedProducts);
-  //     return updatedProducts;
-  //   });
-  // }
-
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  // user profile API hit
-  // const getProductsData = () => {
-  //   getProducts()
-  //     .then((resp) => {
-  //       let respData = resp.data;
-  //       setProducts(respData.slice(1, 12));
-  //       setShowProductsData(respData.slice(1, 12));
-  //     })
-  //     .catch((err) => console.log("errr", err));
-  // };
 
   console.log("data", data);
 
@@ -68,7 +56,7 @@ const ProductPage = ({ fetchData, data, loading, error }) => {
               <Typography variant="h6" color="textPrimary">
                 ${product.price}
               </Typography>
-              <Button variant="contained" color="primary">
+              <Button variant="contained" color="primary" onClick={() => addProduct(product)}>
                 Add to Cart
               </Button>
             </CardContent>
@@ -79,14 +67,4 @@ const ProductPage = ({ fetchData, data, loading, error }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  data: state.data,
-  loading: state.loading,
-  error: state.error,
-});
-
-const mapDispatchToProps = {
-  fetchData,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
+export default ProductPage;
