@@ -1,32 +1,39 @@
-import React from 'react';
+import * as React from "react";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
-export default function Header (){
+export default function Header({onDataChanged}) {
+
+  const handleClick = () => {
+    const cond = 'low_to_high';
+    onDataChanged(cond);
+  };
+
+
   return (
-    <header style={headerStyle}>
-      <h1>RIDHA STORE</h1>
-      <nav>
-        <ul style={navStyle}>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">Cart</a></li>
-          <li><a href="#">Login</a></li>
-        </ul>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="collapse navbar-collapse">
+          <form className="form-inline my-2 my-lg-0">
+            <input
+              className="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
       </nav>
-    </header>
+     
+      <Stack spacing={2} direction="row"> Price:
+        <Button variant="contained" onClick={handleClick}>Low To High</Button>
+        <Button variant="contained">High To Low</Button>
+        <Button variant="contained">reset</Button>
+
+      </Stack>
+    </>
   );
-};
-
-const headerStyle = {
-  background: '#333',
-  color: '#fff',
-  textAlign: 'center',
-  padding: '10px',
-};
-
-const navStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  listStyle: 'none',
-  padding: 0,
-};
-
+}

@@ -7,28 +7,49 @@ import {
   CardMedia,
   Button,
 } from "@mui/material";
-import { getProducts } from "../services/productService";
 
-export default function ProductPage() {
-  const [products, setProducts] = useState([]);
+import { connect } from 'react-redux';
+import { fetchData } from '../store/actions';
+
+const ProductPage = ({ fetchData, data, loading, error }) => {
 
   useEffect(() => {
-    getProductsData();
-  }, []);
+    fetchData();
+  }, [fetchData]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // const updateProductsData = () =>{
+  //   setShowProductsData((prevGoals) => {
+  //     const updatedProducts = [...prevGoals];
+  //     updatedProducts.sort(function(a, b){return a.price-b.price});
+  //     console.log("updatedProducts",updatedProducts);
+  //     return updatedProducts;
+  //   });
+  // }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   // user profile API hit
-  const getProductsData = () => {
-    getProducts()
-      .then((resp) => {
-        setProducts(resp.data);
-      })
-      .catch((err) => console.log("errr", err));
-  };
-  console.log("products", products);
+  // const getProductsData = () => {
+  //   getProducts()
+  //     .then((resp) => {
+  //       let respData = resp.data;
+  //       setProducts(respData.slice(1, 12));
+  //       setShowProductsData(respData.slice(1, 12));
+  //     })
+  //     .catch((err) => console.log("errr", err));
+  // };
+
+  console.log("data", data);
 
   return (
     <Grid container spacing={3}>
-      {products.map((product) => (
+      {data.map((product) => (
         <Grid item key={product.id} xs={12} sm={6} md={4}>
           <Card>
             <CardMedia
@@ -56,4 +77,16 @@ export default function ProductPage() {
       ))}
     </Grid>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+  loading: state.loading,
+  error: state.error,
+});
+
+const mapDispatchToProps = {
+  fetchData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
