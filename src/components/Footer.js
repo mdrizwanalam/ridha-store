@@ -1,7 +1,10 @@
 export default function Footer() {
   return (
     <>
-      <footer className="footer-distributed" style={{marginTop:'10px'}}>
+      <footer
+        className="footer-distributed"
+        style={{ marginTop: "10px", bottom: 0 }}
+      >
         <div className="footer-left">
           <h3>
             RIDHA<span> STORE</span>
